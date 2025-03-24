@@ -17,7 +17,7 @@ border-radius: 5px;
 }
 
 /* Same for the favorites */
-
+/* Remember to add this to the favorites when you write the logic */
 #favorites div
 {
 
