@@ -2,6 +2,9 @@ import React from 'react'
 
 
 const MainContent = () => {
+
+
+    
   return (
     
     <div className="h-full w-full col-start-2 row-start-2 border-[12px] rounded-[5px] border-white bg-[#98CB98] relative overflow-scroll md:overflow-hidden flex flex-col items-center md:grid md:grid-cols-[50%_50%] lg:grid-cols-20 md:grid-rows-15">
