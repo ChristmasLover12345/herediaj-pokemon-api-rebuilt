@@ -5,3 +5,4 @@ async function pokemonFetch(userSearch: string)
     
     return data;
 }
+
