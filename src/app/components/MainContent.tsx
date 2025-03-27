@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 
 
-const MainContent = (props: { elementData: string[]; nameData: string; locationData: string; abilitiesData: string[]; movesData: string[]; normalImg: string; shinyImg: string; }) => {
+const MainContent = (props: { elementData: string; nameData: string; locationData: string; abilitiesData: string[]; movesData: string[]; normalImg: string; shinyImg: string; }) => {
 
     const [imageBool, setImageBool] = useState<boolean>(true)
 
@@ -26,7 +26,7 @@ const MainContent = (props: { elementData: string[]; nameData: string; locationD
     {/* <!-- imgae --> */}
     <img className="mt-3 mb-3 md:mt-0 md:mb-0 md:h-full md:w-full h-[200px] w-[250px] md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-1 md:row-end-5 lg:row-start-2 lg:row-end-7" src={imageBool ? props.normalImg : props.shinyImg} alt="pokemon Image" />
     {/* <!-- Shiny toggle --> */}
-    <button id="shinyBtn" className="bg-[#BF0606] text-[40px] md:text-[38px] text-white text-center w-[90%] lg:w-full md:h-[95%] lg:h-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-5 lg:row-start-14">Shiny</button>
+    <button onClick={switchHandle} className="bg-[#BF0606] text-[40px] md:text-[38px] text-white text-center w-[90%] lg:w-full md:h-[95%] lg:h-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-5 lg:row-start-14">Shiny</button>
     {/* <!-- add to favorites button --> */}
     <button id="addFavBtn" className="bg-[#BF0606] text-[40px] text-white text-center w-[90%] lg:w-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-16 lg:col-end-20 md:row-start-6 md:row-end-8 lg:row-start-13 lg:row-end-15">Add to Favorites</button>
     {/* <!-- Info display texts --> */}
@@ -40,7 +40,7 @@ const MainContent = (props: { elementData: string[]; nameData: string; locationD
     <div className="text-center lg:text-start md:col-start-2 lg:col-start-2 lg:col-end-7 md:row-start-3 md:row-end-5 lg:row-start-9 lg:row-end-11">
 
         <h3 className="text-[35px]">Type :</h3>
-        <p className="text-[35px] md:text-[30px]">{ props.elementData.length > 0 ? props.elementData.join(", ") : "" }</p>
+        <p className="text-[35px] md:text-[30px]">{ props.elementData}</p>
 
     </div>
 

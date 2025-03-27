@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-const Navbar = () => {
+const Navbar = (props: { pokemonFunc: (pokemon: string) => void }) => {
 const [dropdown, setDropdown] = useState("hidden")
 
 const DropdownToggle = () => {
@@ -14,6 +14,16 @@ const DropdownToggle = () => {
     else
     {
         setDropdown("hidden")
+    }
+
+}
+
+
+const searchBarFunc = (event: React.KeyboardEvent<HTMLInputElement>, search: string) => {
+
+    if (event.key === "Enter")
+    {
+        props.pokemonFunc(search)
     }
 
 }
@@ -39,7 +49,7 @@ const DropdownToggle = () => {
 
         </div>
 
-        <input placeholder="search" type="text" className="bg-white border-2 md:mx-2 md:h-[60px] rounded-[5px] text-center text-[30px] border-[#BF0606] w-[90%] md:w-[30%] h-[40px] self-center md:order-1" />
+        <input onKeyUp={(event) => searchBarFunc(event, event.currentTarget.value)} placeholder="search" type="text" className="bg-white border-2 md:mx-2 md:h-[60px] rounded-[5px] text-center text-black text-[30px] border-[#BF0606] w-[90%] md:w-[30%] h-[40px] self-center md:order-1" />
 
     </div>
   )
