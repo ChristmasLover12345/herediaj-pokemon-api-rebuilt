@@ -1,6 +1,6 @@
 function getFav()
 {
-    let favoriteData = localStorage.getItem('Favorites');
+    const favoriteData = localStorage.getItem('Favorites');
     if (favoriteData == null)
     {return [];}
     return JSON.parse(favoriteData);
@@ -8,7 +8,7 @@ function getFav()
 
 function saveFav(mon: string)
 {
-    let pokeArr = getFav()
+    const pokeArr = getFav()
     if (!pokeArr.includes(mon))
     {
         pokeArr.push(mon);
@@ -18,7 +18,7 @@ function saveFav(mon: string)
 
 function removeFav(mon: string)
 {
-    let pokeData = getFav()
+    const pokeData = getFav()
     let index = pokeData.indexOf(mon)
     pokeData.splice(index, 1)
     localStorage.setItem('Favorites', JSON.stringify(pokeData))

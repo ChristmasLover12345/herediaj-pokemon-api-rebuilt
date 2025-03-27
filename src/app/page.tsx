@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react";
 import MainContent from "./components/MainContent";
 import Navbar from "./components/Navbar";
@@ -6,15 +8,16 @@ import Navbar from "./components/Navbar";
 export default function Home() {
   const [pmName, setPmName] = useState("");
   const [pmLocation, setPmLocation] = useState("");
-  const [pmElement, setPmElement] = useState("");
-  const [pmImg, setPmImg] = useState("");
-  const [pmAbilities, setPmAbilities] = useState("");
-  const [pmMoves, setPmMoves] = useState("");
+  const [pmElement, setPmElement] = useState<string[]>([]);
+  
+  const [pmAbilities, setPmAbilities] = useState<string[]>([]);
+  const [pmMoves, setPmMoves] = useState<string[]>([]);
   const [normalUrl, setNormalUrl] = useState("");
   const [shinyUrl, setShinyUrl] = useState("");
   
 
   const [currentPokemon, setCurrentPokemon] = useState("");
+  const [evolutionData, setEvolutionData] = useState()
 
   const rng = (min: number, max: number) => {
     min = Math.ceil(min)
@@ -31,10 +34,10 @@ export default function Home() {
   {
     setPmName("gen 1 - 5 only")
     setPmLocation("gen 1 - 5 only")
-    setPmElement("gen 1 - 5 only")
-    setPmImg("/king-von-rapper.gif")
-    setPmAbilities("")
-    setPmMoves("")
+    setPmElement(["gen 1 - 5 only"])
+    setNormalUrl("/king-von-rapper.gif")
+    setPmAbilities([""])
+    setPmMoves([""])
     return
   }
   else
@@ -45,8 +48,9 @@ export default function Home() {
   setNormalUrl(pokeInfo.sprites.front_default)
   setShinyUrl(pokeInfo.sprites.front_shiny)
 
-  setPmImg(pokeInfo.sprites.front_default)
   setPmName(pokeInfo.name)
+  setPmAbilities(pokeInfo.abilities)
+  setPmMoves(pokeInfo.moves)
 
   const locationData = await fetch(pokeInfo.location_area_encounters)
   const locations = await locationData.json()
@@ -56,6 +60,17 @@ export default function Home() {
   else
   { setPmLocation(locations[rng(0, locations.length - 1)].location_area.name) }
 
+  // REMEMBER TO DO THIS ON FRIDAY
+  const speciesData = await fetch(pokeInfo.species.url)
+  const speciesChain = await speciesData.json()
+  const evoData = await fetch(speciesChain.evolution_chain.url)
+  if (!evoData.ok)
+  {
+   
+  }
+  // REMEMBER TO DO THIS ON FRIDAY
+
+
 
  }
 
@@ -64,7 +79,7 @@ export default function Home() {
 
     <Navbar />
 
-    <MainContent />
+    <MainContent elementData={ pmElement } nameData={pmName} locationData={pmLocation} abilitiesData={pmAbilities} movesData={pmMoves} normalImg={normalUrl} shinyImg={shinyUrl} />
 
     </div>
   );

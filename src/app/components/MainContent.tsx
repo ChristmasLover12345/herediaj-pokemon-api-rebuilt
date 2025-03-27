@@ -1,8 +1,21 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 
 
-const MainContent = () => {
+const MainContent = (props: { elementData: string[]; nameData: string; locationData: string; abilitiesData: string[]; movesData: string[]; normalImg: string; shinyImg: string; }) => {
 
+    const [imageBool, setImageBool] = useState<boolean>(true)
+
+    const switchHandle = () => {
+        setImageBool(!imageBool)
+    }
+
+    useEffect(() => {
+
+    setImageBool(true)
+
+    },[props.nameData])
 
     
   return (
@@ -11,7 +24,7 @@ const MainContent = () => {
     {/* <!-- Animation --> */}
     <div className="scanline"></div>
     {/* <!-- imgae --> */}
-    <img id="pmImg" className="mt-3 mb-3 md:mt-0 md:mb-0 md:h-full md:w-full h-[200px] w-[250px] md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-1 md:row-end-5 lg:row-start-2 lg:row-end-7" src="" alt="pokemon Image" />
+    <img className="mt-3 mb-3 md:mt-0 md:mb-0 md:h-full md:w-full h-[200px] w-[250px] md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-1 md:row-end-5 lg:row-start-2 lg:row-end-7" src={imageBool ? props.normalImg : props.shinyImg} alt="pokemon Image" />
     {/* <!-- Shiny toggle --> */}
     <button id="shinyBtn" className="bg-[#BF0606] text-[40px] md:text-[38px] text-white text-center w-[90%] lg:w-full md:h-[95%] lg:h-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-5 lg:row-start-14">Shiny</button>
     {/* <!-- add to favorites button --> */}
@@ -20,21 +33,21 @@ const MainContent = () => {
     <div className="text-center lg:text-start md:col-start-2 lg:col-start-2 lg:col-end-7 md:row-start-1 md:row-end-3 lg:row-start-7 lg:row-end-9">
 
         <h3 className="text-[35px]">Name :</h3>
-        <p id="pmName" className="text-[35px] md:text-[30px]"></p>
+        <p className="text-[35px] md:text-[30px]">{props.nameData}</p>
 
     </div>
 
     <div className="text-center lg:text-start md:col-start-2 lg:col-start-2 lg:col-end-7 md:row-start-3 md:row-end-5 lg:row-start-9 lg:row-end-11">
 
         <h3 className="text-[35px]">Type :</h3>
-        <p id="pmElement" className="text-[35px] md:text-[30px]"></p>
+        <p className="text-[35px] md:text-[30px]">{ props.elementData.length > 0 ? props.elementData.join(", ") : "" }</p>
 
     </div>
 
     <div className="text-center lg:text-start mb-3 md:col-start-2 lg:col-start-2 lg:col-end-7 md:row-start-5 md:row-end-8 lg:row-start-11 lg:row-end-14">
 
         <h3 className="text-[35px]">Found In :</h3>
-        <p id="pmLocation" className="text-[35px] md:text-[30px]"></p>
+        <p  className="text-[35px] md:text-[30px]">{props.locationData}</p>
 
     </div>
 
@@ -43,7 +56,15 @@ const MainContent = () => {
 
         <h2 className="border-b-2 border-[#FF1E1E] text-[40px] w-[90%]">Moves</h2>
 
-        <div id="pmMoves" className="h-[95%] w-[90%] mb-1 text-center overflow-auto">
+        <div className="h-[95%] w-[90%] mb-1 text-center overflow-auto">
+
+            {props.movesData.length > 0 ? (
+                props.movesData.map((move, index) => (
+                    <p key={index} className='text-[20px] md:text-[25px] lg:text-[30px]'>{move}</p>
+                ))
+            ) : (
+                <p className='m-0 p-0'>no moves</p>
+            )}
 
         </div>
 
@@ -54,7 +75,15 @@ const MainContent = () => {
 
         <h2 className="border-b-2 border-[#FF1E1E] text-[40px] w-[90%]">Abilities</h2>
 
-        <div id="pmAbilities" className="h-[95%] w-[90%] mb-1 text-center overflow-auto">
+        <div  className="h-[95%] w-[90%] mb-1 text-center overflow-auto">
+
+        {props.abilitiesData.length > 0 ? (
+                props.abilitiesData.map((move, index) => (
+                    <p key={index} className='text-[20px] md:text-[25px] lg:text-[30px]'>{move}</p>
+                ))
+            ) : (
+                <p className='m-0 p-0'>no abilities</p>
+            )}
 
         </div>
 
