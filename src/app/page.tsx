@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MainContent from "./components/MainContent";
 import Navbar from "./components/Navbar";
 import { pokemonFetch } from "./Services/DataService";
 import { EvolutionChain } from "./interface";
+import { getFav } from "./Services/LocalStorage";
 
  
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
 
   const [currentPokemon, setCurrentPokemon] = useState("");
   const [evolutionData, setEvolutionData] = useState<string[]>([])
+  const [favorites, setFavorites] = useState<string[]>([])
 
   const rng = (min: number, max: number) => {
     min = Math.ceil(min)
@@ -28,7 +30,7 @@ export default function Home() {
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
 
- const GetInfo = async (userMon: string ) => {
+ const GetInfo = async (userMon: string | number ) => {
  
   const pokeInfo = await pokemonFetch(userMon)
 
@@ -55,6 +57,9 @@ export default function Home() {
   setPmElement(pokeInfo.types.map((typeObj: { type: { name: string; }; }) => typeObj.type.name).join(", "))
   setPmAbilities(pokeInfo.abilities.map((abilityObj: { ability: { name: string; }; }) => abilityObj.ability.name));
   setPmMoves(pokeInfo.moves.map((moveObj: { move: { name: string; }; }) => moveObj.move.name))
+  setFavorites(getFav)
+
+
 
   const locationData = await fetch(pokeInfo.location_area_encounters)
   const locations = await locationData.json()
@@ -105,12 +110,16 @@ export default function Home() {
 
  }
 
+ useEffect(() => {
+  GetInfo(rng(0, 649))
+ },[])
+
   return (
     <div className="bg-[#FF0000] h-screen w-screen grid grid-cols-[5%_90%_5%] lg:grid-cols-[2%_96%_2%] grid-rows-[15%_auto_3%]">
 
-    <Navbar pokemonFunc={GetInfo}/>
+    <Navbar setFavs={setFavorites} favs={favorites} rngFunc={rng} pokemonFunc={GetInfo}/>
 
-    <MainContent pokemonFunc={GetInfo} elementData={ pmElement } nameData={pmName} locationData={pmLocation} abilitiesData={pmAbilities} movesData={pmMoves} normalImg={normalUrl} shinyImg={shinyUrl} evoData={evolutionData} />
+    <MainContent setFavs={setFavorites} currentMon={currentPokemon} pokemonFunc={GetInfo} elementData={ pmElement } nameData={pmName} locationData={pmLocation} abilitiesData={pmAbilities} movesData={pmMoves} normalImg={normalUrl} shinyImg={shinyUrl} evoData={evolutionData} />
 
     </div>
   );

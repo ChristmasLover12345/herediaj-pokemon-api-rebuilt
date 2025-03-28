@@ -1,10 +1,10 @@
 'use client'
 
-import React, { MouseEventHandler, useEffect, useState } from 'react'
-import { pokemonFetch } from '../Services/DataService';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { getFav, saveFav } from '../Services/LocalStorage';
 
 
-const MainContent = (props: { pokemonFunc: (pokemon: string) => void, elementData: string, nameData: string, locationData: string, abilitiesData: string[], movesData: string[]; normalImg: string; shinyImg: string; evoData: string[]; }) => {
+const MainContent = (props: { setFavs: Dispatch<SetStateAction<string[]>>; currentMon: string; pokemonFunc: (pokemon: string) => void, elementData: string, nameData: string, locationData: string, abilitiesData: string[], movesData: string[]; normalImg: string; shinyImg: string; evoData: string[]; }) => {
 
     const [imageBool, setImageBool] = useState<boolean>(true)
     const [shinyText, setShinyText] = useState<string>("Shiny")
@@ -18,6 +18,11 @@ const MainContent = (props: { pokemonFunc: (pokemon: string) => void, elementDat
         setImageBool(!imageBool)
       
         
+    }
+
+    const FavBtn = () => {
+        saveFav(props.currentMon)
+        props.setFavs(getFav)
     }
 
     useEffect(() => {
@@ -38,7 +43,7 @@ const MainContent = (props: { pokemonFunc: (pokemon: string) => void, elementDat
     {/* <!-- Shiny toggle --> */}
     <button onClick={switchHandle} className="bg-[#BF0606] text-[40px] md:text-[38px] text-white text-center w-[90%] lg:w-full md:h-[95%] lg:h-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-5 lg:row-start-14">{shinyText}</button>
     {/* <!-- add to favorites button --> */}
-    <button  className="bg-[#BF0606] text-[40px] text-white text-center w-[90%] lg:w-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-16 lg:col-end-20 md:row-start-6 md:row-end-8 lg:row-start-13 lg:row-end-15">Add to Favorites</button>
+    <button onClick={() => FavBtn()} className="bg-[#BF0606] text-[40px] text-white text-center w-[90%] lg:w-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-16 lg:col-end-20 md:row-start-6 md:row-end-8 lg:row-start-13 lg:row-end-15">Add to Favorites</button>
     {/* <!-- Info display texts --> */}
     <div className="text-center lg:text-start md:col-start-2 lg:col-start-2 lg:col-end-7 md:row-start-1 md:row-end-3 lg:row-start-7 lg:row-end-9">
 
