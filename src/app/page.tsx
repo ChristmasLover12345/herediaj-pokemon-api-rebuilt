@@ -88,7 +88,7 @@ export default function Home() {
     }
     else
     {
-      let evolutionArray: string[] = []
+      const evolutionArray: string[] = []
 
       const getEvos = (evoChain: EvolutionChain ) => {
         if(!evoChain) return

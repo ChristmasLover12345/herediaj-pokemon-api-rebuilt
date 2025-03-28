@@ -19,7 +19,7 @@ function saveFav(mon: string)
 function removeFav(mon: string)
 {
     const pokeData = getFav()
-    let index = pokeData.indexOf(mon)
+    const index = pokeData.indexOf(mon)
     pokeData.splice(index, 1)
     localStorage.setItem('Favorites', JSON.stringify(pokeData))
 }
