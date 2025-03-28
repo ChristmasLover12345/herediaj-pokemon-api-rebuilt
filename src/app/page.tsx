@@ -18,7 +18,7 @@ export default function Home() {
   
 
   const [currentPokemon, setCurrentPokemon] = useState("");
-  const [evolutionData, setEvolutionData] = useState()
+  const [evolutionData, setEvolutionData] = useState<string[]>([])
 
   const rng = (min: number, max: number) => {
     min = Math.ceil(min)
@@ -68,7 +68,25 @@ export default function Home() {
   const evoData = await fetch(speciesChain.evolution_chain.url)
   if (!evoData.ok)
   {
-   
+   setEvolutionData(["N/A"])
+  }
+  else
+  {
+    const evoChain = await evoData.json()
+    const evolutions = evoChain.chain
+
+    if (!evolutions.evolves_to.length)
+    {
+      setEvolutionData(["N/A"])
+    }
+    else
+    {
+      let evolutionArray: string[] = []
+
+      
+
+    }
+
   }
   // REMEMBER TO DO THIS ON FRIDAY
 
