@@ -1,19 +1,29 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
+import { pokemonFetch } from '../Services/DataService';
 
 
-const MainContent = (props: { elementData: string; nameData: string; locationData: string; abilitiesData: string[]; movesData: string[]; normalImg: string; shinyImg: string; }) => {
+const MainContent = (props: { pokemonFunc: (pokemon: string) => void, elementData: string, nameData: string, locationData: string, abilitiesData: string[], movesData: string[]; normalImg: string; shinyImg: string; evoData: string[]; }) => {
 
     const [imageBool, setImageBool] = useState<boolean>(true)
+    const [shinyText, setShinyText] = useState<string>("Shiny")
 
     const switchHandle = () => {
+        if (imageBool)
+        {setShinyText("Normal")}
+        else
+        {setShinyText("Shiny")}
+
         setImageBool(!imageBool)
+      
+        
     }
 
     useEffect(() => {
 
     setImageBool(true)
+    setShinyText("Shiny")
 
     },[props.nameData])
 
@@ -26,9 +36,9 @@ const MainContent = (props: { elementData: string; nameData: string; locationDat
     {/* <!-- imgae --> */}
     <img className="mt-3 mb-3 md:mt-0 md:mb-0 md:h-full md:w-full h-[200px] w-[250px] md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-1 md:row-end-5 lg:row-start-2 lg:row-end-7" src={imageBool ? props.normalImg : props.shinyImg} alt="pokemon Image" />
     {/* <!-- Shiny toggle --> */}
-    <button onClick={switchHandle} className="bg-[#BF0606] text-[40px] md:text-[38px] text-white text-center w-[90%] lg:w-full md:h-[95%] lg:h-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-5 lg:row-start-14">Shiny</button>
+    <button onClick={switchHandle} className="bg-[#BF0606] text-[40px] md:text-[38px] text-white text-center w-[90%] lg:w-full md:h-[95%] lg:h-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-2 lg:col-end-7 md:row-start-5 lg:row-start-14">{shinyText}</button>
     {/* <!-- add to favorites button --> */}
-    <button id="addFavBtn" className="bg-[#BF0606] text-[40px] text-white text-center w-[90%] lg:w-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-16 lg:col-end-20 md:row-start-6 md:row-end-8 lg:row-start-13 lg:row-end-15">Add to Favorites</button>
+    <button  className="bg-[#BF0606] text-[40px] text-white text-center w-[90%] lg:w-full md:justify-self-center self-center rounded-[5px] mb-3 md:mb-0 md:col-start-1 lg:col-start-16 lg:col-end-20 md:row-start-6 md:row-end-8 lg:row-start-13 lg:row-end-15">Add to Favorites</button>
     {/* <!-- Info display texts --> */}
     <div className="text-center lg:text-start md:col-start-2 lg:col-start-2 lg:col-end-7 md:row-start-1 md:row-end-3 lg:row-start-7 lg:row-end-9">
 
@@ -96,8 +106,16 @@ const MainContent = (props: { elementData: string; nameData: string; locationDat
         <h2 className="border-b-2 border-[#FF1E1E] mb-1 text-[30px] w-[90%] block md:hidden">(Top to bottom)</h2>
         <h2 className="border-b-2 border-[#FF1E1E] mb-1 text-[30px] w-[90%] hidden md:block">(Left to Right)</h2>
 
-        <div id="pmEvolutions" className="h-[95%] w-[90%] mb-1 text-center flex flex-col md:flex-row justify-center items-center overflow-auto">
+        <div  className="h-[95%] w-[90%] mb-1 text-center flex flex-col md:flex-row justify-center items-center overflow-auto">
             {/* <!-- Evolutions will generate inside this div --> */}
+
+            {props.evoData.length > 0 ? (
+                props.evoData.map((name, index) => (
+                    <p onClick={() => props.pokemonFunc(name)} key={index} className='bg-[#BF0606] text-[20px] md:text-[25px] lg:text-[30px] text-white p-[5px] mt-0 ml-0 mr-[6px] mb-[2px] border-2 border-black max-w-[200px] max-h-[60px] text-center rounded-[5px]'>{name}</p>
+                ))
+            ) : ( 
+                <p className='p-0 m-0'></p>
+            )}
 
         </div>
 

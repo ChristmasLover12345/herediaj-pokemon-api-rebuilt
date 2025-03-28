@@ -25,6 +25,23 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
+
+/* Same for the favorites */
+/* Remember to add this to the favorites when you write the logic */
+#favorites div
+{
+
+    background-color:#D9D9D9 ;
+    display: flex;
+    width: 95%;
+    height: 80px;
+    justify-content: space-between;
+    border-radius: 5px;
+    border: solid black 2px;
+    margin-bottom: 5px;
+}
+
 .scanline
 {
 

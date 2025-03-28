@@ -4,6 +4,7 @@ import { useState } from "react";
 import MainContent from "./components/MainContent";
 import Navbar from "./components/Navbar";
 import { pokemonFetch } from "./Services/DataService";
+import { EvolutionChain } from "./interface";
 
  
 export default function Home() {
@@ -39,6 +40,7 @@ export default function Home() {
     setNormalUrl("/king-von-rapper.gif")
     setPmAbilities([""])
     setPmMoves([""])
+    setEvolutionData([])
     return
   }
   else
@@ -68,7 +70,7 @@ export default function Home() {
   const evoData = await fetch(speciesChain.evolution_chain.url)
   if (!evoData.ok)
   {
-   setEvolutionData(["N/A"])
+   
   }
   else
   {
@@ -77,13 +79,22 @@ export default function Home() {
 
     if (!evolutions.evolves_to.length)
     {
-      setEvolutionData(["N/A"])
+      
     }
     else
     {
       let evolutionArray: string[] = []
 
-      
+      const getEvos = (evoChain: EvolutionChain ) => {
+        if(!evoChain) return
+
+        evolutionArray.push(evoChain.species.name);
+        evoChain.evolves_to.forEach(getEvos);
+      }
+
+      getEvos(evolutions)
+
+      setEvolutionData(evolutionArray)
 
     }
 
@@ -99,7 +110,7 @@ export default function Home() {
 
     <Navbar pokemonFunc={GetInfo}/>
 
-    <MainContent elementData={ pmElement } nameData={pmName} locationData={pmLocation} abilitiesData={pmAbilities} movesData={pmMoves} normalImg={normalUrl} shinyImg={shinyUrl} />
+    <MainContent pokemonFunc={GetInfo} elementData={ pmElement } nameData={pmName} locationData={pmLocation} abilitiesData={pmAbilities} movesData={pmMoves} normalImg={normalUrl} shinyImg={shinyUrl} evoData={evolutionData} />
 
     </div>
   );
